@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e50914">
+  <title>Eclipse Recode — Minecraft Software</title>
+  <style>
+    :root{
+      --red:#e50914;
+      --red2:#ff2633;
+      --bg:#070707;
+      --card:#101010;
+      --card2:#151515;
+      --text:#fff;
+      --muted:#9a9a9a;
+      --line:#252525;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Arial,Helvetica,sans-serif;
+      background:
+        radial-gradient(circle at 50% -10%,rgba(229,9,20,.22),transparent 35%),
+        linear-gradient(#070707,#050505);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+    header{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(18px);
+      background:rgba(7,7,7,.78);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{
+      height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px
+    }
+    .logo{font-size:21px;font-weight:900;letter-spacing:-.8px}
+    .logo span{color:var(--red)}
+    .navlinks{display:flex;gap:28px;color:#aaa;font-size:14px}
+    .navlinks a:hover{color:#fff}
+    .nav-actions{display:flex;gap:10px}
+    .btn{
+      border:1px solid var(--line);background:#111;color:#fff;
+      padding:11px 17px;border-radius:10px;font-weight:700;cursor:pointer;
+      transition:.2s;display:inline-flex;align-items:center;justify-content:center
+    }
+    .btn:hover{transform:translateY(-2px);border-color:#444}
+    .btn-red{background:var(--red);border-color:var(--red)}
+    .btn-red:hover{background:var(--red2);box-shadow:0 10px 30px rgba(229,9,20,.2)}
+    .hero{text-align:center;padding:105px 0 90px}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 13px;border:1px solid rgba(229,9,20,.35);
+      background:rgba(229,9,20,.08);border-radius:999px;color:#ff7b81;
+      font-size:12px;font-weight:800;margin-bottom:22px
+    }
+    .dot{width:7px;height:7px;border-radius:50%;background:#ff2633;box-shadow:0 0 12px #e50914}
+    h1{
+      font-size:clamp(48px,9vw,94px);line-height:.92;letter-spacing:-5px;
+      font-weight:950;margin-bottom:24px
+    }
+    h1 span{color:var(--red)}
+    .hero p{max-width:650px;margin:auto;color:#999;font-size:17px;line-height:1.7}
+    .hero-buttons{display:flex;justify-content:center;gap:12px;margin-top:32px;flex-wrap:wrap}
+    .section{padding:80px 0}
+    .section-head{text-align:center;margin-bottom:38px}
+    .section-head h2{font-size:38px;letter-spacing:-1.5px;margin-bottom:10px}
+    .section-head p{color:#888}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .feature,.price,.panel{
+      background:linear-gradient(145deg,#111,#0b0b0b);
+      border:1px solid var(--line);border-radius:18px;padding:25px
+    }
+    .feature-icon{
+      width:43px;height:43px;border-radius:12px;background:rgba(229,9,20,.12);
+      display:flex;align-items:center;justify-content:center;color:#ff3a43;font-size:20px;margin-bottom:18px
+    }
+    .feature h3{font-size:17px;margin-bottom:8px}.feature p{color:#888;line-height:1.6;font-size:14px}
+    .pricing{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .price{text-align:center;padding:23px 14px;position:relative}
+    .price.hot{border-color:rgba(229,9,20,.55);box-shadow:0 0 35px rgba(229,9,20,.07)}
+    .popular{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--red);font-size:10px;font-weight:900;padding:5px 9px;border-radius:20px;white-space:nowrap}
+    .price h3{font-size:15px;color:#aaa}.amount{font-size:28px;font-weight:900;margin:13px 0 3px}.rub{color:#777;font-size:12px}
+    .price .btn{width:100%;margin-top:18px;font-size:13px}
+    .account{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:stretch
+    }
+    .account-info h3{font-size:25px;margin-bottom:10px}.account-info p{color:#888;line-height:1.6}
+    .status{
+      margin-top:22px;padding:15px;border-radius:12px;background:#0a0a0a;border:1px solid var(--line);
+      color:#888;font-size:14px
+    }
+    .status b{color:#fff}
+    .mock-dashboard{display:grid;gap:10px}
+    .dash-row{display:flex;justify-content:space-between;gap:10px;padding:14px;border:1px solid var(--line);background:#0b0b0b;border-radius:11px;font-size:13px}
+    .dash-row span:first-child{color:#777}.green{color:#39e58c!important}
+    .faq{max-width:780px;margin:auto;display:grid;gap:10px}
+    details{background:#0d0d0d;border:1px solid var(--line);border-radius:12px;padding:17px}
+    summary{cursor:pointer;font-weight:700}.answer{color:#888;padding-top:12px;line-height:1.6;font-size:14px}
+    .community{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    footer{border-top:1px solid var(--line);padding:35px 0;color:#777;font-size:12px;text-align:center}
+    footer strong{color:#bbb}
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);
+      display:none;align-items:center;justify-content:center;padding:20px;z-index:50
+    }
+    .modal.open{display:flex}
+    .modal-box{width:min(420px,100%);background:#0d0d0d;border:1px solid #292929;border-radius:18px;padding:25px;position:relative}
+    .close{position:absolute;right:16px;top:13px;color:#777;background:none;border:0;font-size:24px;cursor:pointer}
+    .modal-box h2{margin-bottom:7px}.modal-box p{color:#777;font-size:13px;margin-bottom:20px}
+    input{
+      width:100%;padding:13px 14px;margin-bottom:10px;border-radius:10px;
+      background:#070707;border:1px solid #282828;color:#fff;outline:none
+    }
+    input:focus{border-color:rgba(229,9,20,.7)}
+    .modal-box .btn{width:100%;margin-top:5px}
+    .note{font-size:11px!important;text-align:center;margin-top:13px!important;margin-bottom:0!important}
+    @media(max-width:900px){
+      .pricing{grid-template-columns:repeat(2,1fr)}
+      .features{grid-template-columns:1fr}
+      .account{grid-template-columns:1fr}
+      .navlinks{display:none}
+    }
+    @media(max-width:520px){
+      .nav{height:62px}.nav-actions .btn:first-child{display:none}
+      .hero{padding:78px 0 65px}h1{letter-spacing:-3px}
+      .pricing{grid-template-columns:1fr}
+      .section{padding:60px 0}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">ECLIPSE<span>.</span></a>
+    <nav class="navlinks">
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Цены</a>
+      <a href="#account">Аккаунт</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn" onclick="openModal('login')">Войти</button>
+      <button class="btn btn-red" onclick="openModal('register')">Регистрация</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="badge"><span class="dot"></span> ECLIPSE RECODE · BY KAYOMI & FRED</div>
+      <h1>PLAY<br><span>WITHOUT LIMITS.</span></h1>
+      <p>
+        Eclipse Recode — новый Minecraft software от Kayomi & Fred.
+        Быстрый, удобный и созданный для тех, кто хочет получить максимум.
+      </p>
+      <div class="hero-buttons">
+        <a class="btn btn-red" href="#pricing">Выбрать подписку</a>
+        <a class="btn" href="#features">Узнать больше</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2>Почему Eclipse?</h2>
+        <p>Всё необходимое — в одном software.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Высокая производительность</h3>
+          <p>Eclipse создаётся с упором на стабильность и комфортную работу.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">◈</div>
+          <h3>Удобный интерфейс</h3>
+          <p>Простой и понятный интерфейс без лишнего мусора.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✓</div>
+          <h3>Система лицензий</h3>
+          <p>После покупки подписка и персональный ключ будут отображаться в аккаунте.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2>Цены</h2>
+        <p>Выбери подходящий срок использования Eclipse Recode.</p>
+      </div>
+      <div class="pricing">
+        <div class="price">
+          <h3>1 МЕСЯЦ</h3><div class="amount">250 ₽</div><div class="rub">30 дней</div>
+          <button class="btn" onclick="showSoon()">Выбрать</button>
+        </div>
+        <div class="price hot">
+          <div class="popular">ПОПУЛЯРНЫЙ</div>
+          <h3>3 МЕСЯЦА</h3><div class="amount">700 ₽</div><div class="rub">90 дней</div>
+          <button class="btn btn-red" onclick="showSoon()">Выбрать</button>
+        </div>
+        <div class="price">
+          <h3>6 МЕСЯЦЕВ</h3><div class="amount">1200 ₽</div><div class="rub">180 дней</div>
+          <button class="btn" onclick="showSoon()">Выбрать</button>
+        </div>
+        <div class="price">
+          <h3>12 МЕСЯЦЕВ</h3><div class="amount">1700 ₽</div><div class="rub">365 дней</div>
+          <button class="btn" onclick="showSoon()">Выбрать</button>
+        </div>
+        <div class="price">
+          <h3>НАВСЕГДА</h3><div class="amount">2000 ₽</div><div class="rub">Lifetime</div>
+          <button class="btn" onclick="showSoon()">Выбрать</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="account">
+    <div class="container">
+      <div class="section-head">
+        <h2>Личный кабинет</h2>
+        <p>После запуска системы покупок здесь будет управление лицензией.</p>
+      </div>
+      <div class="account">
+        <div class="feature account-info">
+          <h3>Твоя лицензия — в одном месте.</h3>
+          <p>После регистрации и покупки здесь появится ключ Eclipse Recode, срок подписки и история покупок.</p>
+          <div class="status">Статус: <b>Ожидание активации</b></div>
+          <br>
+          <button class="btn btn-red" onclick="openModal('register')">Создать аккаунт</button>
+        </div>
+        <div class="panel mock-dashboard">
+          <div class="dash-row"><span>Пользователь</span><b>Не авторизован</b></div>
+          <div class="dash-row"><span>Подписка</span><b class="green">—</b></div>
+          <div class="dash-row"><span>Ключ</span><b>—</b></div>
+          <div class="dash-row"><span>Дата окончания</span><b>—</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <h2>FAQ</h2>
+        <p>Ответы на основные вопросы.</p>
+      </div>
+      <div class="faq">
+        <details><summary>Что такое Eclipse Recode?</summary><div class="answer">Minecraft software, создаваемый Kayomi & Fred.</div></details>
+        <details><summary>Как получить ключ?</summary><div class="answer">Сейчас система покупок ещё не подключена. После её запуска ключ будет автоматически выдаваться после успешной покупки.</div></details>
+        <details><summary>Можно ли использовать один аккаунт на разных устройствах?</summary><div class="answer">Да. На этом этапе привязка лицензии к устройству не планируется.</div></details>
+        <details><summary>Где узнать новости?</summary><div class="answer">Следи за Telegram-каналом и Discord-сервером Eclipse.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Наше сообщество</h2>
+        <p>Присоединяйся к Eclipse.</p>
+      </div>
+      <div class="community">
+        <a class="btn btn-red" href="https://t.me/eclipsebedrockk" target="_blank">Telegram</a>
+        <a class="btn" href="https://discord.gg/eNkbXSR6R" target="_blank">Discord</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>ECLIPSE RECODE</strong> · Created by Kayomi & Fred<br><br>
+    Eclipse Recode не связан, не спонсируется и не поддерживается Mojang Studios или Microsoft.
+    <br><br>© 2026 Eclipse Recode. All rights reserved.
+  </div>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+  const modal=document.getElementById('modal');
+  const content=document.getElementById('modalContent');
+
+  function openModal(type){
+    if(type==='register'){
+      content.innerHTML=`
+        <h2>Создать аккаунт</h2>
+        <p>Регистрация Eclipse Recode.</p>
+        <input id="regUser" placeholder="Username" autocomplete="username">
+        <input id="regPass" type="password" placeholder="Пароль" autocomplete="new-password">
+        <button class="btn btn-red" onclick="fakeRegister()">Зарегистрироваться</button>
+        <p class="note">Покупки и выдача ключей будут подключены позже.</p>`;
+    }else{
+      content.innerHTML=`
+        <h2>Войти</h2>
+        <p>Вход в личный кабинет Eclipse Recode.</p>
+        <input id="loginUser" placeholder="Username" autocomplete="username">
+        <input id="loginPass" type="password" placeholder="Пароль" autocomplete="current-password">
+        <button class="btn btn-red" onclick="fakeLogin()">Войти</button>
+        <p class="note">Система аккаунтов пока работает только как интерфейс.</p>`;
+    }
+    modal.classList.add('open');
+  }
+  function closeModal(){modal.classList.remove('open')}
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+
+  function fakeRegister(){
+    const u=document.getElementById('regUser').value.trim();
+    const p=document.getElementById('regPass').value;
+    if(!u||!p){alert('Заполни username и пароль.');return}
+    alert('Регистрация будет подключена вместе с backend-системой. Сейчас это демонстрационный интерфейс.');
+  }
+  function fakeLogin(){
+    alert('Система входа будет подключена позже вместе с backend.');
+  }
+  function showSoon(){
+    alert('Покупка пока не подключена. На данном этапе это только интерфейс сайта.');
+  }
+</script>
+</body>
+</html>
